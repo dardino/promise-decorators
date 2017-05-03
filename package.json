@@ -1,6 +1,6 @@
 {
   "name": "promise-decorators",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "set of promise methods decorators",
   "main": "./dist/promise-decorators.js",
   "scripts": {
