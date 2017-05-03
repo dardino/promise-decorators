@@ -74,8 +74,11 @@ var __metadata = (this && this.__metadata) || function (k, v) {
         var x = cp.CallCounter;
         Promise.all([p1, p2, p3, p4]).then(function (list) {
             it("all promises resolved", function () {
-                expect(list.length).toBe(4);
+                expect(list.length).toBe(5);
                 expect(list.every(function (f) { return f === true; })).toBe(true);
+                cp.MetodoPromise2();
+                var x = cp.CallCounter2;
+                expect(x).toBe(2);
             });
         });
         it("PromiseOnce counter test", function () {

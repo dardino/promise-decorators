@@ -51,8 +51,11 @@ describe("Test PromiseOnce", () => {
 	let x: number = cp.CallCounter;
 	Promise.all([p1,p2,p3,p4]).then(list => {
 		it("all promises resolved", () => {
-			expect(list.length).toBe(4);
+			expect(list.length).toBe(5);
 			expect(list.every(f => f === true)).toBe(true);
+			cp.MetodoPromise2();
+			let x: number = cp.CallCounter2;
+		    expect(x).toBe(2);
 		});
 	});
 
