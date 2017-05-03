@@ -1,0 +1,12 @@
+{
+  "spec_dir": "test",
+  "spec_files": [
+    "**/*[tT]est.js"
+  ],
+  "helpers": [
+    "node_modules/systemjs/dist/system.js",
+    "helpers/**/*.js"
+  ],
+  "stopSpecOnExpectationFailure": false,
+  "random": false
+}
