@@ -1,14 +1,14 @@
 {
-  "name": "promise-tools",
+  "name": "promise-decorators",
   "version": "0.0.1",
   "description": "set of promise methods decorators",
-  "main": "./dist/promise-tools.js",
+  "main": "./dist/promise-decorators.js",
   "scripts": {
     "test": "jasmine"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/dardino/promise-tools.git"
+    "url": "git+https://github.com/dardino/promise-decorators.git"
   },
   "keywords": [
     "promise",
@@ -18,9 +18,9 @@
   "author": "Gabriele Brunori",
   "license": "GNU General Public License v.3",
   "bugs": {
-    "url": "https://github.com/dardino/promise-tools/issues"
+    "url": "https://github.com/dardino/promise-decorators/issues"
   },
-  "homepage": "https://github.com/dardino/promise-tools#readme",
+  "homepage": "https://github.com/dardino/promise-decorators#readme",
   "devDependencies": {
     "@types/jasmine": "*",
     "@types/karma": "^0.13.35",

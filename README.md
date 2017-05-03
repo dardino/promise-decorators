@@ -1,2 +1,6 @@
-# promise-tools
-set of promise tools and decorators
+# promise-decorators
+This library contains a set of ES6 Promise Tools and Decorators
+
+## quick start
+
+
