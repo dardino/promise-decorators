@@ -4,6 +4,7 @@
  * Each call after first, and until the Promise wasn't resolved succesfully, returns the previous instance of promise.
  * When the function resolves or rejects the Promise then clear the current instance
  */
+
 export function PromiseOnce(target: any, pName: string, descriptor: PropertyDescriptor): void {
 	let pNamePromise: string = `_(${pName})Promise`;
 	if (descriptor == null) {

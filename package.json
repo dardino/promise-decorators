@@ -22,16 +22,11 @@
   },
   "homepage": "https://github.com/dardino/promise-decorators#readme",
   "devDependencies": {
-    "@types/jasmine": "*",
-    "@types/karma": "^0.13.35",
-    "@types/systemjs": "^0.20.2",
+    "@types/jasmine": "^2.5.47",
     "jasmine": "^2.6.0",
-    "jasmine-core": "^2.6.1",
-    "karma": "^1.6.0",
-    "karma-chrome-launcher": "^2.1.0",
-    "karma-jasmine": "^1.1.0"
+    "jasmine-core": "^2.6.1"
   },
   "dependencies": {
-    "systemjs": "^0.20.12"
+    "requirejs": "^2.3.3"
   }
 }

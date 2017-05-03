@@ -4,8 +4,7 @@
     "**/*[tT]est.js"
   ],
   "helpers": [
-    "node_modules/systemjs/dist/system.js",
-    "helpers/**/*.js"
+    "node_modules/requirejs/require.js"
   ],
   "stopSpecOnExpectationFailure": false,
   "random": false
