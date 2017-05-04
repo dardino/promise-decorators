@@ -11,12 +11,11 @@ npm install --save promise-decorators
 ## available decorators
 
 ### @PromiseOnce
-This method decorator for Asynchronous methods allow multiple calls to the same method without
-executing the content function more than one time.
+This method allows multiple concurrencies calls to the same asynchronous method executing the Promise only one time.
 
-Each call after the first, and until the Promise wasn't resolved succesfully, returns the previous instance of promise.
+This method allows multiple calls to the same asynchronous method, but  executing the content of the call only once. Each call after the first, and until the Promise wasn't resolved, gets the previous instance of promise
 
-When the Promise resolves or rejects then clear the instance.
+When the Promise will be resolved or rejected then that will be removed and the next call gets a new instance of promise.
 
 #### Signature
 ```typescript
@@ -69,11 +68,11 @@ async MyMethod(): Promise<boolean> { return true; }
 ```
 
 #### Parameters
-If no parameters was passed to the `PromiseCache` function then the decorator generates an internal key serializing all parameters
+If no parameters are passed to the `PromiseCache` function then the decorator generates an internal key serializing all the parameters
 
-If a `key` parameter was passed to the `PromiseCache` then the cache system uses that key to store the results and no other parameters was used or serialized.
+If a `key` parameter is passed to the `PromiseCache` then the cache system uses this value to store the results and no other parameters will be used or serialized.
 
-When using custom `key` the cache are shared between each method in the same class (static or not) that uses that key.
+When using a custom `key` the cache is shared between each method in the same class (static or not) that uses that key.
 
 #### Example
 ```typescript
