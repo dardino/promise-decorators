@@ -1,0 +1,37 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "0.1.0",
+    "tasks": [
+        {
+            "taskName": "compile All TS",
+            "command": "${workspaceRoot}/compile.cmd",
+            "isShellCommand": true,
+            "isBackground": true,
+            "problemMatcher": "$tsc",
+            "args": ["${workspaceRoot}/src", "${workspaceRoot}/test"],
+            "showOutput": "always",
+            "isBuildCommand": true
+        },
+        {
+            "taskName": "compile TS app",
+            "command": "tsc",
+            "isShellCommand": true,
+            "isBackground": true,
+            "problemMatcher": "$tsc-watch",
+            "args": ["-p", "${workspaceRoot}/src", "-w"],
+            "showOutput": "always",
+            "isBuildCommand": false
+        },
+        {
+            "taskName": "compile TS tests",
+            "command": "tsc",
+            "isShellCommand": true,
+            "isBackground": true,
+            "problemMatcher": "$tsc-watch",
+            "args": ["-p", "${workspaceRoot}/test", "-w"],
+            "showOutput": "always",
+            "isBuildCommand": false
+        }
+    ]
+}

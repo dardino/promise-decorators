@@ -5,3 +5,11 @@
  * When the function resolves or rejects the Promise then clear the current instance
  */
 export declare function PromiseOnce(target: any, pName: string, descriptor: PropertyDescriptor): void;
+/**
+ * This Method enables a simple cache for a Promise method.
+ * NOTE: all parameters must be serializable by JSON.stringify
+ * because the cache depends by calling parameters
+ */
+export declare function PromiseCache(): MethodDecorator;
+export declare function PromiseCache(key: string): MethodDecorator;
+export declare function PromiseCache<T>(target: T, propertyKey: string, descriptor: PropertyDescriptor): PropertyDescriptor;

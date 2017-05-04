@@ -1,6 +1,6 @@
 {
   "name": "promise-decorators",
-  "version": "0.0.2",
+  "version": "0.0.4",
   "description": "set of promise methods decorators",
   "main": "./dist/promise-decorators.js",
   "scripts": {
@@ -24,9 +24,10 @@
   "devDependencies": {
     "@types/jasmine": "^2.5.47",
     "jasmine": "^2.6.0",
-    "jasmine-core": "^2.6.1"
+    "jasmine-core": "^2.6.1",
+    "typescript": "^2.3.2"
   },
   "dependencies": {
-    "requirejs": "^2.3.3"
+    
   }
 }

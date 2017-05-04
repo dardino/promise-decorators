@@ -2,66 +2,61 @@ import { PromiseOnce } from "../dist/promise-tools";
 
 class ClassWithPromise {
 	public CallCounter = 0;
-	public CallCounter2 = 0;
+	public NotOnceCounter = 0;
 
 	@PromiseOnce
-	MetodoPromise(): Promise<boolean> {
+	async WithPromiseOnce(): Promise<boolean> {
 		this.CallCounter++;
-		return new Promise((resolve, reject) => {
-			setTimeout(() => {
-				resolve(true);
-			}, 5000);
-		});
+		return true;
 	}
 
-	MetodoPromise2(): Promise<boolean> {
-		this.CallCounter2++;
-		return new Promise((resolve, reject) => {
-			setTimeout(() => {
-				resolve(false);
-			}, 5000);
-		});
+	async NotOnce(): Promise<boolean> {
+		this.NotOnceCounter++;
+		return false;
 	}
 }
 
-describe("Test no PromiseOnce", () => {
-    let cp: ClassWithPromise = new ClassWithPromise();
-	let p1: Promise<boolean> = cp.MetodoPromise2();
-	let p2: Promise<boolean> = cp.MetodoPromise2();
-	let p3: Promise<boolean> = cp.MetodoPromise2();
-	let p4: Promise<boolean> = cp.MetodoPromise2();
-	let x: number = cp.CallCounter2;
-	Promise.all([p1,p2,p3,p4]).then(list => {
-		it("all promises resolved", () => {
+describe("PromiseOnce", () => {
+	jasmine.DEFAULT_TIMEOUT_INTERVAL = 2000;
+
+	let cp: ClassWithPromise = new ClassWithPromise();
+	let p1: Promise<boolean> = cp.NotOnce();
+	let p2: Promise<boolean> = cp.NotOnce();
+	let p3: Promise<boolean> = cp.NotOnce();
+	let p4: Promise<boolean> = cp.NotOnce();
+	it("NotOnce all promises resolved", (done) => {
+		Promise.all([p1, p2, p3, p4]).then(list => {
 			expect(list.length).toBe(4);
 			expect(list.every(f => f === false)).toBe(true);
+			done();
 		});
 	});
-    it("PromiseOnce counter test", () => {
-        expect(x).toBe(4);
-    });
 
-});
-describe("Test PromiseOnce", () => {
-    let cp: ClassWithPromise = new ClassWithPromise();
-	let p1: Promise<boolean> = cp.MetodoPromise();
-	let p2: Promise<boolean> = cp.MetodoPromise();
-	let p3: Promise<boolean> = cp.MetodoPromise();
-	let p4: Promise<boolean> = cp.MetodoPromise();
-	let x: number = cp.CallCounter;
-	Promise.all([p1,p2,p3,p4]).then(list => {
-		it("all promises resolved", () => {
-			expect(list.length).toBe(5);
+	it("NotOnce counter test", () => {
+		let x: number = cp.NotOnceCounter;
+		expect(x).toBe(4);
+	});
+
+	let pp1: Promise<boolean> = cp.WithPromiseOnce();
+	let pp2: Promise<boolean> = cp.WithPromiseOnce();
+	let pp3: Promise<boolean> = cp.WithPromiseOnce();
+	let pp4: Promise<boolean> = cp.WithPromiseOnce();
+
+	it("WithPromiseOnce all promises resolved", (done) => {
+		Promise.all([pp1, pp2, pp3, pp4]).then(list => {
+			expect(list.length).toBe(4);
 			expect(list.every(f => f === true)).toBe(true);
-			cp.MetodoPromise2();
-			let x: number = cp.CallCounter2;
-		    expect(x).toBe(2);
+			cp.WithPromiseOnce();
+			let x: number = cp.CallCounter;
+			expect(x).toBe(2);
+			done();
 		});
 	});
 
-    it("PromiseOnce counter test", () => {
-        expect(x).toBe(1);
-    });
+	it("WithPromiseOnce counter test", () => {
+		let x: number = cp.CallCounter;
+		expect(x).toBe(2);
+	});
 
 });
 

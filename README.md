@@ -18,8 +18,15 @@ Each call after the first, and until the Promise wasn't resolved succesfully, re
 
 When the Promise resolves or rejects then clear the instance.
 
+#### Signature
+```typescript
+@PromiseOnce /* this decorator doesn't have any parameters.*/
+```
+
 #### Example
 ```typescript
+import { PromiseOnce } from "promise-tools";
+
 class MyClass {
     public CallCounter = 0;
 
@@ -42,3 +49,96 @@ Promise.all([p1,p2,p3,p4]).then(values => {
 });
 ```
 
+### PromiseCache
+This Method enables a very simple cache for a Promise methods.
+
+**NOTE:** all parameters must be serializable by `JSON.stringify`
+because the cache depends by calling parameters
+
+#### Signature
+```typescript
+// Without parameters:
+@PromiseCache
+async MyMethod(): Promise<boolean> { return true; }
+// OR:
+@PromiseCache()
+async MyMethod(): Promise<boolean> { return true; }
+// With "key" parameter:
+@PromiseCache("myCacheKey")
+async MyMethod(): Promise<boolean> { return true; }
+```
+
+#### Parameters
+If no parameters was passed to the `PromiseCache` function then the decorator generates an internal key serializing all parameters
+
+If a `key` parameter was passed to the `PromiseCache` then the cache system uses that key to store the results and no other parameters was used or serialized.
+
+When using custom `key` the cache are shared between each method in the same class (static or not) that uses that key.
+
+#### examples
+```typescript
+import { PromiseCache } from "../dist/promise-tools";
+
+let values: Array<Array<boolean>> = [
+    [true, true, true],
+    [false, false, false],
+    [true, false, true],
+];
+
+class ClassCache {
+    public GetItems1Counter: number = 0;
+    @PromiseCache
+    GetItems1(index: number): Promise<Array<boolean>> {
+        return new Promise<Array<boolean>>((resolve, reject) => {
+            this.GetItems1Counter++;
+            resolve(values[index]);
+        });
+    }
+    public static GetItems2Counter: number = 0;
+    @PromiseCache
+    static async GetItems2(index: number): Promise<Array<boolean>> {
+        ClassCache.GetItems2Counter++;
+        return values[index];
+    }
+    public static SharedCount: number = 0;
+    @PromiseCache("shared")
+    static async GetItemsSharedStatic(index: number): Promise<Array<boolean>> {
+        ClassCache.SharedCount++;
+        return values[index];
+    }
+    @PromiseCache("shared")
+    async GetItemsShared(index: number): Promise<Array<boolean>> {
+        ClassCache.SharedCount++;
+        return values[index];
+    }
+}
+
+async function tests() {
+    let cc: ClassCache = new ClassCache();
+    await cc.GetItems1(0);
+    // cc.GetItems1Counter == 1;
+    await cc.GetItems1(0);
+    // cc.GetItems1Counter == 1;
+    await cc.GetItems1(1);
+    // cc.GetItems1Counter == 2;
+    await ClassCache.GetItems2(0);
+    // cc.GetItems2Counter == 1;
+    await ClassCache.GetItems2(1);
+    // cc.GetItems2Counter == 2;
+    await ClassCache.GetItems2(1);
+    // cc.GetItems2Counter == 2;
+    await ClassCache.GetItemsSharedStatic(0);
+    // cc.SharedCount == 1;
+    await ClassCache.GetItemsSharedStatic(1);
+    // cc.SharedCount == 1;
+    await ClassCache.GetItemsSharedStatic(2);
+    // cc.SharedCount == 1;
+    await cc.GetItemsShared(0);
+    // cc.SharedCount == 1;
+    await cc.GetItemsShared(1);
+    // cc.SharedCount == 1;
+    await cc.GetItemsShared(2);
+    // cc.SharedCount == 1;
+}
+
+```
