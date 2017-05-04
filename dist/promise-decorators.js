@@ -149,4 +149,4 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
     exports.PromiseCache = PromiseCache;
 });
-//# sourceMappingURL=promise-tools.js.map
+//# sourceMappingURL=promise-decorators.js.map

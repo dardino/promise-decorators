@@ -1,4 +1,4 @@
-import { PromiseCache } from "../dist/promise-tools";
+import { PromiseCache } from "../dist/promise-decorators";
 
 let values: Array<Array<boolean>> = [
     [true, true, true],

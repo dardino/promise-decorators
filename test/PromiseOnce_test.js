@@ -48,12 +48,12 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (v !== undefined) module.exports = v;
     }
     else if (typeof define === "function" && define.amd) {
-        define(["require", "exports", "../dist/promise-tools"], factory);
+        define(["require", "exports", "../dist/promise-decorators"], factory);
     }
 })(function (require, exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    var promise_tools_1 = require("../dist/promise-tools");
+    var promise_decorators_1 = require("../dist/promise-decorators");
     var ClassWithPromise = (function () {
         function ClassWithPromise() {
             this.CallCounter = 0;
@@ -78,7 +78,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         return ClassWithPromise;
     }());
     __decorate([
-        promise_tools_1.PromiseOnce,
+        promise_decorators_1.PromiseOnce,
         __metadata("design:type", Function),
         __metadata("design:paramtypes", []),
         __metadata("design:returntype", Promise)

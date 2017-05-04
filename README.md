@@ -24,7 +24,7 @@ When the Promise will be resolved or rejected then that will be removed and the 
 
 #### Example
 ```typescript
-import { PromiseOnce } from "promise-tools";
+import { PromiseOnce } from "promise-decorators";
 
 class MyClass {
     public CallCounter = 0;
@@ -76,7 +76,7 @@ When using a custom `key` the cache is shared between each method in the same cl
 
 #### Example
 ```typescript
-import { PromiseCache } from "../dist/promise-tools";
+import { PromiseCache } from "../dist/promise-decorators";
 
 let values: Array<Array<boolean>> = [
     [true, true, true],

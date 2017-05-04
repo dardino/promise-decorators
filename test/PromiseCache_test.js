@@ -48,13 +48,13 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (v !== undefined) module.exports = v;
     }
     else if (typeof define === "function" && define.amd) {
-        define(["require", "exports", "../dist/promise-tools"], factory);
+        define(["require", "exports", "../dist/promise-decorators"], factory);
     }
 })(function (require, exports) {
     "use strict";
     var _this = this;
     Object.defineProperty(exports, "__esModule", { value: true });
-    var promise_tools_1 = require("../dist/promise-tools");
+    var promise_decorators_1 = require("../dist/promise-decorators");
     var values = [
         [true, true, true],
         [false, false, false],
@@ -103,25 +103,25 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     ClassCache.GetItems2Counter = 0;
     ClassCache.SharedCount = 0;
     __decorate([
-        promise_tools_1.PromiseCache,
+        promise_decorators_1.PromiseCache,
         __metadata("design:type", Function),
         __metadata("design:paramtypes", [Number]),
         __metadata("design:returntype", Promise)
     ], ClassCache.prototype, "GetItems1", null);
     __decorate([
-        promise_tools_1.PromiseCache("shared"),
+        promise_decorators_1.PromiseCache("shared"),
         __metadata("design:type", Function),
         __metadata("design:paramtypes", [Number]),
         __metadata("design:returntype", Promise)
     ], ClassCache.prototype, "GetItemsShared", null);
     __decorate([
-        promise_tools_1.PromiseCache,
+        promise_decorators_1.PromiseCache,
         __metadata("design:type", Function),
         __metadata("design:paramtypes", [Number]),
         __metadata("design:returntype", Promise)
     ], ClassCache, "GetItems2", null);
     __decorate([
-        promise_tools_1.PromiseCache("shared"),
+        promise_decorators_1.PromiseCache("shared"),
         __metadata("design:type", Function),
         __metadata("design:paramtypes", [Number]),
         __metadata("design:returntype", Promise)

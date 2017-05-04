@@ -1,4 +1,4 @@
-import { PromiseOnce } from "../dist/promise-tools";
+import { PromiseOnce } from "../dist/promise-decorators";
 
 class ClassWithPromise {
 	public CallCounter = 0;
