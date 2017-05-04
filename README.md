@@ -10,7 +10,7 @@ npm install --save promise-decorators
 
 ## available decorators
 
-### PromiseOnce
+### @PromiseOnce
 This method decorator for Asynchronous methods allow multiple calls to the same method without
 executing the content function more than one time.
 
@@ -49,7 +49,7 @@ Promise.all([p1,p2,p3,p4]).then(values => {
 });
 ```
 
-### PromiseCache
+### @PromiseCache
 This Method enables a very simple cache for a Promise methods.
 
 **NOTE:** all parameters must be serializable by `JSON.stringify`
@@ -75,7 +75,7 @@ If a `key` parameter was passed to the `PromiseCache` then the cache system uses
 
 When using custom `key` the cache are shared between each method in the same class (static or not) that uses that key.
 
-#### examples
+#### Example
 ```typescript
 import { PromiseCache } from "../dist/promise-tools";
 
