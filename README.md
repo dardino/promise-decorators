@@ -11,9 +11,9 @@ npm install --save promise-decorators
 ## available decorators
 
 ### @PromiseOnce
-This method allows multiple concurrencies calls to the same asynchronous method executing the Promise only one time.
+This method allows multiple concurrent calls to the same asynchronous method executing the content of the call only once.
 
-This method allows multiple calls to the same asynchronous method, but  executing the content of the call only once. Each call after the first, and until the Promise wasn't resolved, gets the previous instance of promise
+Each call after the first, and until the Promise wasn't resolved, gets the previous instance of promise
 
 When the Promise will be resolved or rejected then that will be removed and the next call gets a new instance of promise.
 
