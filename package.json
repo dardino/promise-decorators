@@ -1,6 +1,6 @@
 {
   "name": "promise-decorators",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "set of promise methods decorators",
   "main": "./dist/promise-decorators.js",
   "typings": "./dist/promise-decorators.d.ts",
@@ -17,7 +17,7 @@
     "typescript"
   ],
   "author": "Gabriele Brunori",
-  "license": "GNU General Public License v.3",
+  "license": "GPL-3.0",
   "bugs": {
     "url": "https://github.com/dardino/promise-decorators/issues"
   },
@@ -28,7 +28,5 @@
     "jasmine-core": "^2.6.1",
     "typescript": "^2.3.2"
   },
-  "dependencies": {
-    
-  }
+  "dependencies": {}
 }

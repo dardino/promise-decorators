@@ -1,3 +1,4 @@
+"use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     return new (P || (P = Promise))(function (resolve, reject) {
         function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
@@ -33,120 +34,109 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-(function (factory) {
-    if (typeof module === "object" && typeof module.exports === "object") {
-        var v = factory(require, exports);
-        if (v !== undefined) module.exports = v;
+Object.defineProperty(exports, "__esModule", { value: true });
+/**
+ * This method decorator for Asynchronous methods allow multiple calls to the same method without
+ * executing the content function more than one time.
+ * Each call after first, and until the Promise wasn't resolved succesfully, returns the previous instance of promise.
+ * When the function resolves or rejects the Promise then clear the current instance
+ */
+function PromiseOnce(target, pName, descriptor) {
+    var pNamePromise = "_(" + pName + ")Promise";
+    if (descriptor == null) {
+        descriptor = Object.getOwnPropertyDescriptor(target, pName);
     }
-    else if (typeof define === "function" && define.amd) {
-        define(["require", "exports"], factory);
-    }
-})(function (require, exports) {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", { value: true });
-    /**
-     * This method decorator for Asynchronous methods allow multiple calls to the same method without
-     * executing the content function more than one time.
-     * Each call after first, and until the Promise wasn't resolved succesfully, returns the previous instance of promise.
-     * When the function resolves or rejects the Promise then clear the current instance
-     */
-    function PromiseOnce(target, pName, descriptor) {
-        var pNamePromise = "_(" + pName + ")Promise";
-        if (descriptor == null) {
-            descriptor = Object.getOwnPropertyDescriptor(target, pName);
+    var old_fn = descriptor.value;
+    descriptor.value = function () {
+        var args = [];
+        for (var _i = 0; _i < arguments.length; _i++) {
+            args[_i] = arguments[_i];
         }
-        var old_fn = descriptor.value;
-        descriptor.value = function () {
+        var self = this;
+        if (self[pNamePromise] == null) {
+            var retval = old_fn.apply(self, args);
+            if (retval instanceof Promise) {
+                self[pNamePromise] = retval;
+                self[pNamePromise].then(function () { self[pNamePromise] = null; }).catch(function () { self[pNamePromise] = null; });
+            }
+            else {
+                return retval;
+            }
+        }
+        return self[pNamePromise];
+    };
+}
+exports.PromiseOnce = PromiseOnce;
+function serializeKeys(obj, methodName, args) {
+    try {
+        return methodName + "_" + JSON.stringify(args);
+    }
+    catch (err) {
+        throw new Error("Unable to serialize arguments");
+    }
+}
+function promiseCache(cacheKey) {
+    if (cacheKey === void 0) { cacheKey = null; }
+    return function (target, propertyKey, descriptor) {
+        var methodName = propertyKey;
+        var pdesc = descriptor || Object.getOwnPropertyDescriptor(target, propertyKey);
+        var old_method = pdesc.value;
+        pdesc.value = function () {
             var args = [];
             for (var _i = 0; _i < arguments.length; _i++) {
                 args[_i] = arguments[_i];
             }
-            var self = this;
-            if (self[pNamePromise] == null) {
-                var retval = old_fn.apply(self, args);
-                if (retval instanceof Promise) {
-                    self[pNamePromise] = retval;
-                    self[pNamePromise].then(function () { self[pNamePromise] = null; }).catch(function () { self[pNamePromise] = null; });
-                }
-                else {
-                    return retval;
-                }
-            }
-            return self[pNamePromise];
-        };
-    }
-    exports.PromiseOnce = PromiseOnce;
-    function serializeKeys(obj, methodName, args) {
-        try {
-            return methodName + "_" + JSON.stringify(args);
-        }
-        catch (err) {
-            throw new Error("Unable to serialize arguments");
-        }
-    }
-    function promiseCache(cacheKey) {
-        if (cacheKey === void 0) { cacheKey = null; }
-        return function (target, propertyKey, descriptor) {
-            var methodName = propertyKey;
-            var pdesc = descriptor || Object.getOwnPropertyDescriptor(target, propertyKey);
-            var old_method = pdesc.value;
-            pdesc.value = function () {
-                var args = [];
-                for (var _i = 0; _i < arguments.length; _i++) {
-                    args[_i] = arguments[_i];
-                }
-                return __awaiter(this, void 0, void 0, function () {
-                    var _self, key, cacheRepos, cacheRepo, _a;
-                    return __generator(this, function (_b) {
-                        switch (_b.label) {
-                            case 0:
-                                _self = this;
-                                if (typeof _self === "function") {
-                                    _self = _self.prototype;
+            return __awaiter(this, void 0, void 0, function () {
+                var _self, key, cacheRepos, cacheRepo, _a;
+                return __generator(this, function (_b) {
+                    switch (_b.label) {
+                        case 0:
+                            _self = this;
+                            if (typeof _self === "function") {
+                                _self = _self.prototype;
+                            }
+                            else {
+                                _self = _self.constructor.prototype;
+                            }
+                            key = cacheKey !== null ? cacheKey : serializeKeys(_self, methodName, args);
+                            if (_self.$$cache === undefined) {
+                                _self.$$cache = {};
+                            }
+                            cacheRepos = _self.$$cache;
+                            // se non ho un repositori per la cache nell'oggetto allora lo creo
+                            if (cacheRepos[key] === undefined || (cacheRepos[key].value === undefined && cacheRepos[key].promise === undefined)) {
+                                cacheRepos[key] = {
+                                    value: undefined,
+                                    promise: undefined
+                                };
+                                cacheRepos[key].promise = old_method.apply(this, args);
+                                if (!(cacheRepos[key].promise instanceof Promise)) {
+                                    throw new Error("PromiseCache decorator can only be used in async methods (methods that returns Promise)");
                                 }
-                                else {
-                                    _self = _self.constructor.prototype;
-                                }
-                                key = cacheKey !== null ? cacheKey : serializeKeys(_self, methodName, args);
-                                if (_self.$$cache === undefined) {
-                                    _self.$$cache = {};
-                                }
-                                cacheRepos = _self.$$cache;
-                                // se non ho un repositori per la cache nell'oggetto allora lo creo
-                                if (cacheRepos[key] === undefined || (cacheRepos[key].value === undefined && cacheRepos[key].promise === undefined)) {
-                                    cacheRepos[key] = {
-                                        value: undefined,
-                                        promise: undefined
-                                    };
-                                    cacheRepos[key].promise = old_method.apply(this, args);
-                                    if (!(cacheRepos[key].promise instanceof Promise)) {
-                                        throw new Error("PromiseCache decorator can only be used in async methods (methods that returns Promise)");
-                                    }
-                                }
-                                cacheRepo = cacheRepos[key];
-                                if (!(cacheRepo.value === undefined)) return [3 /*break*/, 2];
-                                _a = cacheRepo;
-                                return [4 /*yield*/, cacheRepo.promise];
-                            case 1:
-                                _a.value = _b.sent();
-                                return [2 /*return*/, cacheRepo.value];
-                            case 2: return [2 /*return*/, cacheRepo.value];
-                        }
-                    });
+                            }
+                            cacheRepo = cacheRepos[key];
+                            if (!(cacheRepo.value === undefined)) return [3 /*break*/, 2];
+                            _a = cacheRepo;
+                            return [4 /*yield*/, cacheRepo.promise];
+                        case 1:
+                            _a.value = _b.sent();
+                            return [2 /*return*/, cacheRepo.value];
+                        case 2: return [2 /*return*/, cacheRepo.value];
+                    }
                 });
-            };
-            return pdesc;
+            });
         };
+        return pdesc;
+    };
+}
+function PromiseCache(p1, propertyKey, descriptor) {
+    if (p1 === void 0) { p1 = null; }
+    if (p1 === null || typeof p1 === "string") {
+        return promiseCache(p1);
     }
-    function PromiseCache(p1, propertyKey, descriptor) {
-        if (p1 === void 0) { p1 = null; }
-        if (p1 === null || typeof p1 === "string") {
-            return promiseCache(p1);
-        }
-        else {
-            return promiseCache()(p1, propertyKey, descriptor);
-        }
+    else {
+        return promiseCache()(p1, propertyKey, descriptor);
     }
-    exports.PromiseCache = PromiseCache;
-});
+}
+exports.PromiseCache = PromiseCache;
 //# sourceMappingURL=promise-decorators.js.map
