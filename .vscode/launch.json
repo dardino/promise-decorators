@@ -31,6 +31,7 @@
         "outFiles": [
             "${workspaceRoot}/dist/**/*.js",
             "${workspaceRoot}/test/**/*.js"
-        ]
+        ],
+        "request": "launch"
     }]
 }

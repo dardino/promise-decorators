@@ -44,7 +44,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 function PromiseOnce(target, pName, descriptor) {
     var pNamePromise = "_(" + pName + ")Promise";
     if (descriptor == null) {
-        descriptor = Object.getOwnPropertyDescriptor(target, pName);
+        var d = Object.getOwnPropertyDescriptor(target, pName);
+        if (d == null)
+            return;
+        else
+            descriptor = d;
     }
     var old_fn = descriptor.value;
     descriptor.value = function () {

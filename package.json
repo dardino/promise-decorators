@@ -1,6 +1,6 @@
 {
   "name": "promise-decorators",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "set of promise methods decorators",
   "main": "./dist/promise-decorators.js",
   "typings": "./dist/promise-decorators.d.ts",
@@ -23,10 +23,10 @@
   },
   "homepage": "https://github.com/dardino/promise-decorators#readme",
   "devDependencies": {
-    "@types/jasmine": "^2.5.47",
-    "jasmine": "^2.6.0",
-    "jasmine-core": "^2.6.1",
-    "typescript": "^2.3.2"
+    "@types/jasmine": "^2.8.4",
+    "jasmine": "^2.8.0",
+    "jasmine-core": "^2.8.0",
+    "typescript": "^2.6.2"
   },
   "dependencies": {}
 }

@@ -4,10 +4,12 @@
  * Each call after first, and until the Promise wasn't resolved succesfully, returns the previous instance of promise.
  * When the function resolves or rejects the Promise then clear the current instance
  */
-export function PromiseOnce(target: any, pName: string, descriptor: PropertyDescriptor): void {
+export function PromiseOnce(target: any, pName: PropertyKey, descriptor: PropertyDescriptor): void {
 	let pNamePromise: string = `_(${pName})Promise`;
 	if (descriptor == null) {
-		descriptor = Object.getOwnPropertyDescriptor(target, pName);
+		let d = Object.getOwnPropertyDescriptor(target, pName);
+		if (d == null) return;
+		else descriptor = d;
 	}
 	let old_fn: Function = descriptor.value as Function;
 	descriptor.value = function (...args: any[]): Promise<any> | any {
@@ -25,7 +27,7 @@ export function PromiseOnce(target: any, pName: string, descriptor: PropertyDesc
 	};
 }
 
-function serializeKeys(obj: any, methodName: string, args: any[]): string {
+function serializeKeys(obj: any, methodName: PropertyKey, args: any[]): string {
 	try {
 		return `${methodName}_${JSON.stringify(args)}`;
 	} catch (err) {
@@ -46,8 +48,8 @@ type ICacheRepo = {
 type IObjectWithCache = ICacheObj | Function;
 
 function promiseCache(cacheKey: string | null = null): MethodDecorator {
-	return (target: any, propertyKey: string, descriptor: PropertyDescriptor): PropertyDescriptor => {
-		let methodName: string = propertyKey;
+	return (target: any, propertyKey: PropertyKey, descriptor: PropertyDescriptor): PropertyDescriptor => {
+		let methodName: PropertyKey = propertyKey;
 		let pdesc: PropertyDescriptor = descriptor || Object.getOwnPropertyDescriptor(target, propertyKey);
 		let old_method: Function = pdesc.value;
 		pdesc.value = async function (...args: any[]): Promise<any> {
