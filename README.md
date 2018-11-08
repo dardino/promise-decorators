@@ -52,7 +52,7 @@ Promise.all([p1,p2,p3,p4]).then(values => {
 This Method enables a very simple cache for a Promise methods.
 
 **NOTE:** all parameters must be serializable by `JSON.stringify`
-because the cache depends by calling parameters
+because the cache depends on calling parameters
 
 #### Signature
 ```typescript
